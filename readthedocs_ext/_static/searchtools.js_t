@@ -6,7 +6,7 @@
  *
  * :copyright: Copyright 2007-2015 by the Sphinx team, see AUTHORS.
  * :license: BSD, see LICENSE for details.
- *
+ * NEGOROV!!!!
  */
 
 {% if search_language_stemming_code %}
@@ -372,9 +372,21 @@ var Search = {
     // perform the search on the required terms
     for (i = 0; i < searchterms.length; i++) {
       var word = searchterms[i];
+      
       // no match but word was a required one
       if ((files = terms[word]) === undefined)
-        break;
+      {
+         // add support for partial matches
+        if (word.length > 2) {
+          for (var w in terms) {
+            if (w.match(word) && !terms[word]) {
+              files = terms[w]
+              //_o.push({files: terms[w], score: Scorer.partialTerm})
+            }
+          }
+        }
+      }
+
       if (files.length === undefined) {
         files = [files];
       }
